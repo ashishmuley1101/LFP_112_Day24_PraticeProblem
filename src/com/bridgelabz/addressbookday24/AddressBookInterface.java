@@ -8,8 +8,8 @@ public interface AddressBookInterface {
 
 	public void showContact();
 
-	public boolean deleteContact(Scanner sc);
+	public void deleteContact(Scanner sc);
 
-	public boolean editContact(Scanner sc);
+	public void editContact(Scanner sc);
 
 }

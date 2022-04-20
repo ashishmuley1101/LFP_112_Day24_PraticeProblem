@@ -1,5 +1,6 @@
 package com.bridgelabz.addressbookday24;
 
+import java.util.HashMap;
 import java.util.Scanner;
 
 public class AddressBookMain {
@@ -10,11 +11,18 @@ public class AddressBookMain {
 			throws IllegalAccessError {
 
 		System.out.println(
-				"***--Welcome to the AddressBook--***");
+				"***--Welcome to the addressBook--***");
 
 		sc = new Scanner(System.in);
 
-		AddressBookInterface abi = new AddresBook();
+		HashMap<String, AddressBookInterface> addressBook = new HashMap<>();
+		AddressBookInterface familyaddressBook = new AddresBook();
+		AddressBookInterface businessaddressBook = new AddresBook();
+		AddressBookInterface friendsaddressBook = new AddresBook();
+
+		addressBook.put("Family", familyaddressBook);
+		addressBook.put("Business", businessaddressBook);
+		addressBook.put("Friends", friendsaddressBook);
 
 		int userInput = 0;
 
@@ -22,35 +30,65 @@ public class AddressBookMain {
 
 			userInput = getOption(sc);
 			sc = new Scanner(System.in);
+			String inputValue;
 			switch (userInput) {
 			case 1:
-				abi.addContact(sc);
+
+				System.out.println(
+						"Enter which addressBook you want to add contact");
+				System.out.println(
+						"1. Family \n2. Business \n3. Friends");
+				inputValue = sc.nextLine();
+
+				sc = new Scanner(System.in);
+				addressBook.get(inputValue).addContact(sc);
 
 				break;
 			case 2:
-				abi.showContact();
+
+				addressBook.forEach((key, addressbook) -> {
+					System.out.println("--------" + key
+							+ "-----");
+
+					addressbook.showContact();
+				});
 
 				break;
 
 			case 3:
-				abi.editContact(sc);
+				System.out.println(
+						"Enter which addressBook you want to edit the contact");
+				System.out.println(
+						"1. Family \n2. Business \n3. Friends");
+				inputValue = sc.nextLine();
+
+				sc = new Scanner(System.in);
+				addressBook.get(inputValue).editContact(
+						sc);
+
 				break;
 
 			case 4:
+				System.out.println(
+						"Enter which addressBook you want to delete the contact");
+				System.out.println(
+						"1. Family \n2. Business \n3. Friends");
+				inputValue = sc.nextLine();
 
-				abi.deleteContact(sc);
+				sc = new Scanner(System.in);
+				addressBook.get(inputValue).deleteContact(sc);
 				break;
 
 			case 5:
 
 				userInput = 5;
 				System.out.println(
-						"Exit from addressbook bye... ");
+						"Exit from addressBook bye...! ");
 				break;
 
 			default:
 				throw new IllegalArgumentException(
-						"Unexpected");
+						"check your option again ...!");
 			}
 
 		}
